@@ -1,11 +1,463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SNS-Management | Register</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef4ff',
+              100: '#d9e5ff',
+              400: '#4d82f7',
+              500: '#2e5dea',
+              600: '#1e4cd6',
+              700: '#143dba',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Mesh and Floating Orb Glows */
+    .orb-glow {
+      position: absolute;
+      border-radius: 9999px;
+      filter: blur(80px);
+      opacity: 0.7;
+      pointer-events: none;
+      animation: float 14s ease-in-out infinite alternate;
+    }
+
+    .orb-1 {
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(147, 197, 253, 0.6) 0%, rgba(199, 210, 254, 0.2) 70%);
+      top: -8%;
+      right: 5%;
+      animation-delay: 0s;
+    }
+
+    .orb-2 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(233, 213, 255, 0.7) 0%, rgba(243, 232, 255, 0.2) 70%);
+      bottom: -10%;
+      left: 2%;
+      animation-delay: -5s;
+    }
+
+    .orb-3 {
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(191, 219, 254, 0.5) 0%, rgba(224, 231, 255, 0.1) 70%);
+      top: 40%;
+      left: 45%;
+      animation-delay: -8s;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-30px) scale(1.05); }
+      100% { transform: translateY(20px) scale(0.95); }
+    }
+
+    /* Frosted Glassmorphism card */
+    .glassmorphic-card {
+      background: rgba(255, 255, 255, 0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 25px 50px -12px rgba(46, 93, 234, 0.15),
+                  0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+    }
+
+    /* Gradient borders and highlights */
+    .input-wrapper:focus-within {
+      border-color: #2e5dea;
+      box-shadow: 0 0 0 4px rgba(46, 93, 234, 0.12);
+    }
+  </style>
 </head>
-<body>
-    
+<body class="bg-[#f6f9fe] text-slate-800 min-h-screen relative overflow-x-hidden flex flex-col justify-between selection:bg-brand-500 selection:text-white">
+
+  <!-- Ambient light orbs behind card -->
+  <div class="orb-glow orb-1"></div>
+  <div class="orb-glow orb-2"></div>
+  <div class="orb-glow orb-3"></div>
+
+  <!-- Top Navigation Header -->
+  <header class="relative z-20 w-full max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+    <!-- Brand Logo -->
+    <a href="/" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-brand-500 to-fuchsia-400 flex items-center justify-center text-white text-xl shadow-md shadow-brand-500/25 transition-transform duration-300 group-hover:scale-105">
+        <i class="fa-regular fa-file-lines"></i>
+      </div>
+      <h1 class="text-xl md:text-2xl font-bold tracking-tight text-slate-900">
+        SNS-<span class="text-brand-500">Management</span>
+      </h1>
+    </a>
+
+    <!-- Top Navigation Links -->
+    <nav class="hidden sm:flex items-center gap-8">
+      <a href="/" class="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-semibold transition-colors duration-200">
+        <i class="fa-solid fa-house-chimney text-base"></i> Home
+      </a>
+      <a href="#" class="flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-semibold transition-colors duration-200">
+        <i class="fa-solid fa-circle-question text-base"></i> Help & Docs
+      </a>
+      <button onclick="toggleModal('info-modal')" class="text-xs font-semibold px-3 py-1.5 rounded-full border border-slate-300 text-slate-600 hover:border-brand-500 hover:text-brand-500 transition-colors">
+        UI Spec
+      </button>
+    </nav>
+  </header>
+
+  <main class="relative z-10 flex-1 flex items-center justify-center px-4 py-8 md:py-12">
+    <div class="w-full max-w-[480px]">
+      
+      <!-- Main Registration Card -->
+      <div class="glassmorphic-card rounded-3xl p-7 sm:p-10 transition-all duration-300">
+        
+        <!-- Header Info -->
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-50 border border-brand-100 text-brand-600 text-xs font-semibold mb-4 shadow-sm">
+            <i class="fa-solid fa-graduation-cap"></i> Student & Professional Workspace
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Create an Account</h2>
+          <p class="text-sm text-slate-500 mt-2 font-medium">Keep your files safe and access smart note management anywhere.</p>
+        </div>
+
+        <!-- Social Fast-track Signup -->
+        <div class="grid grid-cols-2 gap-3 mb-6">
+          <button type="button" class="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 bg-white/80 hover:bg-white text-slate-700 text-xs sm:text-sm font-semibold shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5">
+            <svg class="w-4 h-4" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            Google
+          </button>
+          <button type="button" class="flex items-center justify-center gap-2.5 py-2.5 px-4 rounded-xl border border-slate-200 bg-white/80 hover:bg-white text-slate-700 text-xs sm:text-sm font-semibold shadow-sm hover:shadow transition-all duration-200 hover:-translate-y-0.5">
+            <i class="fa-brands fa-github text-slate-800 text-base"></i>
+            GitHub
+          </button>
+        </div>
+
+        <!-- Separator -->
+        <div class="relative flex items-center justify-center my-6">
+          <div class="w-full border-t border-slate-200"></div>
+          <span class="absolute bg-white/90 px-3 text-[11px] font-bold tracking-wider text-slate-400 uppercase rounded-full">
+            Or register with email
+          </span>
+        </div>
+
+        <!-- Registration Form -->
+        <form id="register-form" class="space-y-4" onsubmit="handleRegistration(event)">
+          
+          <!-- Full Name -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="fullname">Full Name</label>
+            <div class="input-wrapper relative flex items-center bg-white/90 border border-slate-200 rounded-xl transition-all duration-200">
+              <span class="pl-3.5 text-slate-400">
+                <i class="fa-regular fa-user"></i>
+              </span>
+              <input 
+                id="fullname" 
+                type="text" 
+                required 
+                placeholder="e.g. Johnathan Doe" 
+                class="w-full py-2.5 pl-3 pr-4 bg-transparent text-sm text-slate-800 placeholder-slate-400 outline-none rounded-xl font-medium"
+              >
+            </div>
+          </div>
+
+          <!-- Email Address -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="email">Email Address</label>
+            <div class="input-wrapper relative flex items-center bg-white/90 border border-slate-200 rounded-xl transition-all duration-200">
+              <span class="pl-3.5 text-slate-400">
+                <i class="fa-regular fa-envelope"></i>
+              </span>
+              <input 
+                id="email" 
+                type="email" 
+                required 
+                placeholder="name@university.edu" 
+                class="w-full py-2.5 pl-3 pr-4 bg-transparent text-sm text-slate-800 placeholder-slate-400 outline-none rounded-xl font-medium"
+              >
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="block text-xs font-semibold text-slate-700" for="password">Password</label>
+              <span id="strength-text" class="text-[11px] font-semibold text-slate-400">Min 8 characters</span>
+            </div>
+            <div class="input-wrapper relative flex items-center bg-white/90 border border-slate-200 rounded-xl transition-all duration-200">
+              <span class="pl-3.5 text-slate-400">
+                <i class="fa-solid fa-lock"></i>
+              </span>
+              <input 
+                id="password" 
+                type="password" 
+                required 
+                placeholder="••••••••" 
+                oninput="checkPasswordStrength(this.value)"
+                class="w-full py-2.5 pl-3 pr-10 bg-transparent text-sm text-slate-800 placeholder-slate-400 outline-none rounded-xl font-medium"
+              >
+              <button 
+                type="button" 
+                onclick="togglePasswordVisibility('password', 'toggle-icon-1')" 
+                class="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors p-1"
+                aria-label="Toggle password visibility"
+              >
+                <i id="toggle-icon-1" class="fa-regular fa-eye-slash text-sm"></i>
+              </button>
+            </div>
+            
+            <!-- Live Password Strength Indicator Bar -->
+            <div class="w-full bg-slate-200 h-1.5 rounded-full mt-2 overflow-hidden flex">
+              <div id="strength-bar" class="h-full w-0 transition-all duration-300 bg-slate-300"></div>
+            </div>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1.5" for="confirm-password">Confirm Password</label>
+            <div class="input-wrapper relative flex items-center bg-white/90 border border-slate-200 rounded-xl transition-all duration-200">
+              <span class="pl-3.5 text-slate-400">
+                <i class="fa-solid fa-shield-halved"></i>
+              </span>
+              <input 
+                id="confirm-password" 
+                type="password" 
+                required 
+                placeholder="••••••••" 
+                oninput="validateMatch()"
+                class="w-full py-2.5 pl-3 pr-10 bg-transparent text-sm text-slate-800 placeholder-slate-400 outline-none rounded-xl font-medium"
+              >
+              <button 
+                type="button" 
+                onclick="togglePasswordVisibility('confirm-password', 'toggle-icon-2')" 
+                class="absolute right-3 text-slate-400 hover:text-slate-600 transition-colors p-1"
+                aria-label="Toggle confirm password visibility"
+              >
+                <i id="toggle-icon-2" class="fa-regular fa-eye-slash text-sm"></i>
+              </button>
+            </div>
+            <p id="match-msg" class="text-[11px] font-medium mt-1 text-red-500 hidden">
+              Passwords do not match
+            </p>
+          </div>
+
+          <!-- Terms & Condition Checkbox -->
+          <div class="flex items-start gap-2.5 pt-1">
+            <input 
+              id="terms" 
+              type="checkbox" 
+              required
+              class="w-4 h-4 mt-0.5 rounded border-slate-300 text-brand-500 focus:ring-brand-500 cursor-pointer accent-brand-500"
+            >
+            <label for="terms" class="text-xs text-slate-600 leading-tight">
+              I agree to the <a href="#" class="text-brand-500 hover:underline font-medium">Terms of Service</a> and <a href="#" class="text-brand-500 hover:underline font-medium">Privacy Policy</a>.
+            </label>
+          </div>
+
+          <!-- Submit Action Button -->
+          <button 
+            type="submit" 
+            id="submit-btn"
+            class="w-full py-3.5 px-6 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-brand-600 via-brand-500 to-indigo-500 hover:from-brand-700 hover:to-indigo-600 shadow-lg shadow-brand-500/30 hover:shadow-brand-500/50 hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 flex items-center justify-center gap-2 mt-2"
+          >
+            <span>Create Free Account</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </form>
+
+        <!-- Footer / Switch to Login -->
+        <div class="text-center mt-6 pt-5 border-t border-slate-100">
+          <p class="text-xs text-slate-500 font-medium">
+            Already have an account? 
+            <a href="#" onclick="showLoginAlert(event)" class="text-brand-500 font-bold hover:text-brand-700 transition-colors ml-1">
+              Sign In <i class="fa-solid fa-arrow-right-to-bracket text-[10px]"></i>
+            </a>
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Live Mock Notification Banner -->
+      <div id="toast" class="hidden mt-4 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs flex items-center gap-3 shadow-md animate-fade-in">
+        <i class="fa-solid fa-circle-check text-emerald-600 text-base"></i>
+        <div>
+          <span class="font-bold">Account created successfully!</span>
+          <p class="text-emerald-700">Redirecting to your notes dashboard...</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Bottom Details -->
+  <footer class="relative z-10 w-full text-center py-5 text-xs text-slate-400">
+    <p>&copy; 2026 SNS-Management. Designed for organized learning and secure storage.</p>
+  </footer>
+
+  <!-- Modal for Template Specifications -->
+  <div id="info-modal" class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl border border-slate-100 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-bold text-slate-800 text-lg flex items-center gap-2">
+          <i class="fa-solid fa-palette text-brand-500"></i> Template Features
+        </h3>
+        <button onclick="toggleModal('info-modal')" class="text-slate-400 hover:text-slate-700">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      <div class="text-xs text-slate-600 space-y-2.5 leading-relaxed">
+        <p><strong class="text-slate-800">Glassmorphism:</strong> 82% translucent surface with layered backdrop-blur and inset light glow.</p>
+        <p><strong class="text-slate-800">Visual Harmony:</strong> Perfectly matched with your Homepage's deep blue (#2e5dea) and soft purple mesh background.</p>
+        <p><strong class="text-slate-800">Dynamic UX:</strong> Real-time password strength checker, eye show/hide toggles, and instant matching validation.</p>
+      </div>
+      <button onclick="toggleModal('info-modal')" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-colors">
+        Got it
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Toggle Password Visibility
+    function togglePasswordVisibility(fieldId, iconId) {
+      const input = document.getElementById(fieldId);
+      const icon = document.getElementById(iconId);
+      
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      } else {
+        input.type = 'password';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      }
+    }
+
+    // Interactive Password Strength Evaluation
+    function checkPasswordStrength(password) {
+      const bar = document.getElementById('strength-bar');
+      const text = document.getElementById('strength-text');
+      
+      let strength = 0;
+      if (password.length >= 8) strength += 1;
+      if (/[A-Z]/.test(password)) strength += 1;
+      if (/[0-9]/.test(password)) strength += 1;
+      if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+      if (password.length === 0) {
+        bar.style.width = '0%';
+        bar.className = 'h-full w-0 transition-all duration-300 bg-slate-300';
+        text.textContent = 'Min 8 characters';
+        text.className = 'text-[11px] font-semibold text-slate-400';
+      } else if (strength <= 1) {
+        bar.style.width = '25%';
+        bar.className = 'h-full transition-all duration-300 bg-red-500';
+        text.textContent = 'Weak';
+        text.className = 'text-[11px] font-semibold text-red-500';
+      } else if (strength === 2 || strength === 3) {
+        bar.style.width = '65%';
+        bar.className = 'h-full transition-all duration-300 bg-amber-500';
+        text.textContent = 'Medium';
+        text.className = 'text-[11px] font-semibold text-amber-500';
+      } else {
+        bar.style.width = '100%';
+        bar.className = 'h-full transition-all duration-300 bg-emerald-500';
+        text.textContent = 'Strong';
+        text.className = 'text-[11px] font-semibold text-emerald-600';
+      }
+
+      validateMatch();
+    }
+
+    // Realtime Password Match Validation
+    function validateMatch() {
+      const pw = document.getElementById('password').value;
+      const confirmPw = document.getElementById('confirm-password').value;
+      const msg = document.getElementById('match-msg');
+
+      if (confirmPw.length > 0 && pw !== confirmPw) {
+        msg.classList.remove('hidden');
+      } else {
+        msg.classList.add('hidden');
+      }
+    }
+
+    // Submit Simulation
+    function handleRegistration(event) {
+      event.preventDefault();
+      const pw = document.getElementById('password').value;
+      const confirmPw = document.getElementById('confirm-password').value;
+      const submitBtn = document.getElementById('submit-btn');
+      const toast = document.getElementById('toast');
+
+      if (pw !== confirmPw) {
+        document.getElementById('match-msg').classList.remove('hidden');
+        return;
+      }
+
+      // Button loading indicator
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i><span>Creating Account...</span>';
+
+      setTimeout(() => {
+        submitBtn.innerHTML = '<i class="fa-solid fa-check"></i><span>Account Created!</span>';
+        submitBtn.classList.replace('from-brand-600', 'from-emerald-600');
+        submitBtn.classList.replace('to-indigo-500', 'to-teal-500');
+        toast.classList.remove('hidden');
+      }, 1000);
+    }
+
+    // Modal Display Switch
+    function toggleModal(id) {
+      const modal = document.getElementById(id);
+      if (modal.classList.contains('hidden')) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      } else {
+        modal.classList.remove('flex');
+        modal.classList.add('hidden');
+      }
+    }
+
+    // Simulated Switch notification
+    function showLoginAlert(event) {
+      event.preventDefault();
+      const toast = document.getElementById('toast');
+      toast.className = 'mt-4 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-800 text-xs flex items-center gap-3 shadow-md animate-fade-in';
+      toast.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket text-brand-500 text-base"></i><div><span class="font-bold">Switching to Sign In</span><p class="text-blue-600">Navigating to the login view...</p></div>';
+      toast.classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
